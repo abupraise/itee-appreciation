@@ -475,7 +475,7 @@ body.lightbox-open {
   overflow: hidden;
 }
 
-/* Mobile */
+/* MOBILE */
 @media (max-width: 768px) {
   .lightbox-close {
     top: 12px;
@@ -508,4 +508,22 @@ body.lightbox-open {
     max-height: 84vh;
     border-radius: 18px;
   }
+}
+
+/* ITALIC FIX */
+#scroll-page {
+    font-style: normal;
+}
+
+#scroll-page em,
+#scroll-page i,
+#scroll-page .letter-sig,
+#scroll-page .final-title em,
+#scroll-page .collage-headline em {
+    font-style: italic !important;
+}
+
+#scroll-page .final-note i,
+#scroll-page .final-note strong i {
+    color: rgba(251, 175, 80, 0.85);
 }
