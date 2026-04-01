@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Appreciating Itee Mercy Omonhinmin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<div id="progress-wrap"></div>
+
+<nav id="nav">
+  <div class="nav-name">Itohan Mercy Omonhinmin</div>
+  <div class="nav-right">
+    <button class="icon-btn" id="musicBtn" title="Toggle music" onclick="toggleMusic()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+    </button>
+  </div>
+</nav>
+
+<audio id="bgAudio" loop preload="none">
+  <source src="https://cdn.pixabay.com/audio/2022/08/04/audio_2dde668d05.mp3" type="audio/mpeg">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3" type="audio/mpeg">
+</audio>
+
+<div id="tap-prev" onclick="prevSlide()"></div>
+<div id="tap-next" onclick="nextSlide()"></div>
+
+<!-- ===== STAGE ===== -->
+<div id="stage">
+
+  <!-- 1: Intro -->
+  <div class="slide active" id="s0">
+    <div class="slide-bg">
+      <div class="glow" style="width:400px;height:400px;background:radial-gradient(circle,rgba(251,175,80,0.14),transparent);top:-70px;left:-50px"></div>
+      <div class="glow" style="width:340px;height:340px;background:radial-gradient(circle,rgba(200,120,240,0.09),transparent);bottom:-50px;right:-40px"></div>
+      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="400" cy="300" r="200" fill="none" stroke="rgba(251,175,80,0.07)" stroke-width="1"/>
+        <circle cx="400" cy="300" r="130" fill="none" stroke="rgba(251,175,80,0.04)" stroke-width="0.5"/>
+        <circle cx="400" cy="300" r="65" fill="rgba(251,175,80,0.03)"/>
+      </svg>
+    </div>
+    <div class="chapter-tag">01 - Beginning</div>
+    <div class="card" style="--tl:linear-gradient(90deg,transparent,rgba(251,175,80,.28),transparent)">
+      <div class="dist-pill"><div class="dot-pulse"></div>Germany to Nigeria · Still connected</div>
+      <div class="hero-label">This one is for you</div>
+      <div class="hero-word" style="--ng:linear-gradient(135deg,#fbbf6e,#f8a4c8)">Itee<br>Mercy.</div>
+      <div class="divider" style="--dc:rgba(251,175,80,0.35)"></div>
+      <div class="sub-line">Every word here is earned by who you are.<br><strong>Praise-Emmanuel thanks you.</strong></div>
+    </div>
+  </div>
+
+  <!-- 2: Distance -->
+  <div class="slide" id="s1">
+    <div class="slide-bg">
+      <div class="glow" style="width:480px;height:380px;background:radial-gradient(circle,rgba(96,165,250,0.11),transparent);top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <path d="M200 300 Q400 150 600 300" fill="none" stroke="rgba(96,165,250,0.14)" stroke-width="1.5"/>
+        <path d="M200 300 Q400 450 600 300" fill="none" stroke="rgba(96,165,250,0.06)" stroke-width="1"/>
+        <circle cx="200" cy="300" r="6" fill="rgba(96,165,250,0.35)"/><circle cx="600" cy="300" r="6" fill="rgba(248,167,168,0.35)"/>
+        <text x="185" y="338" fill="rgba(96,165,250,0.3)" font-size="11" font-family="Poppins" text-anchor="middle">DE</text>
+        <text x="615" y="338" fill="rgba(248,167,168,0.3)" font-size="11" font-family="Poppins" text-anchor="middle">NG</text>
+      </svg>
+    </div>
+    <div class="chapter-tag">02 - The Distance</div>
+    <div class="card" style="--tl:linear-gradient(90deg,transparent,rgba(96,165,250,.22),transparent)">
+      <div class="hero-label">Kilometres between us</div>
+      <div class="hero-num" style="--ng:linear-gradient(135deg,#93c5fd,#e0e7ff)">6,800+</div>
+      <div class="divider" style="--dc:rgba(96,165,250,0.3)"></div>
+      <div class="sub-line">Six thousand eight hundred kilometres that you refused to let become distance.<br><strong>You called anyway. You checked anyway.<br>You showed up anyway.</strong></div>
+    </div>
+  </div>
+
+  <!-- PHOTO SLIDE A -->
+  <div class="slide" id="ph1">
+    <div class="slide-bg"><div class="glow" style="width:380px;height:380px;background:radial-gradient(circle,rgba(96,165,250,0.13),transparent);top:50%;left:50%;transform:translate(-50%,-50%)"></div></div>
+    <div class="chapter-tag">A Glimpse</div>
+    <div class="photo-frame">
+      <div class="photo-box">
+        <div class="photo-icon">📸</div>
+        <div class="photo-hint">Mercy, beautiful as ever</div>
+        <img src="img/7.jpg" alt="Itee Mercy" onerror="this.style.display='none'">
+      </div>
+      <div class="photo-caption">6,800+ km apart and never feels like it 💛</div>
+    </div>
+  </div>
+
+  <!-- 3: Consistency -->
+  <div class="slide" id="s2">
+    <div class="slide-bg">
+      <div class="glow" style="width:460px;height:460px;background:radial-gradient(circle,rgba(167,139,250,0.1),transparent);top:-60px;right:-60px"></div>
+      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <rect x="150" y="170" width="500" height="260" rx="8" fill="none" stroke="rgba(167,139,250,0.07)" stroke-width="1"/>
+        <line x1="150" y1="300" x2="650" y2="300" stroke="rgba(167,139,250,0.08)" stroke-width="0.5"/>
+        <path d="M150 300 L240 300 L320 220 L400 300 L480 300 L560 300 L650 300" fill="none" stroke="rgba(167,139,250,0.22)" stroke-width="1.5"/>
+        <circle cx="320" cy="220" r="5" fill="rgba(167,139,250,0.45)"/>
+      </svg>
+    </div>
+    <div class="chapter-tag">03 - Consistency</div>
+    <div class="card" style="--tl:linear-gradient(90deg,transparent,rgba(167,139,250,.22),transparent)">
+      <div class="hero-label">Days I questioned where I stood with you</div>
+      <div class="hero-num" style="--ng:linear-gradient(135deg,#a78bfa,#e0d7ff)">0.</div>
+      <div class="divider" style="--dc:rgba(167,139,250,0.3)"></div>
+      <div class="sub-line">Zero. Not one day of doubt about you.<br><strong>That kind of consistency is not common.<br>It is chosen, every single morning.</strong></div>
+    </div>
+  </div>
+
+  <!-- 4: Wisdom -->
+  <div class="slide" id="s3">
+    <div class="slide-bg">
+      <div class="glow" style="width:420px;height:420px;background:radial-gradient(circle,rgba(251,175,80,0.1),transparent);bottom:-46px;left:-46px"></div>
+      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="400,100 520,320 280,320" fill="none" stroke="rgba(251,191,36,0.1)" stroke-width="1"/>
+        <polygon points="400,140 490,300 310,300" fill="none" stroke="rgba(251,191,36,0.06)" stroke-width="0.5"/>
+        <circle cx="400" cy="240" r="27" fill="rgba(251,191,36,0.05)"/>
+      </svg>
+    </div>
+    <div class="chapter-tag">04 - Your Wisdom</div>
+    <div class="card" style="--tl:linear-gradient(90deg,transparent,rgba(251,191,36,.22),transparent)">
+      <div class="hero-label">Your words carry</div>
+      <div class="hero-word" style="--ng:linear-gradient(135deg,#fbbf24,#fde68a)">Weight<br>&amp; Light.</div>
+      <div class="divider" style="--dc:rgba(251,191,36,0.3)"></div>
+      <div class="sub-line">You don't just speak. <strong>You say what needs to be said</strong><br>at exactly the moment I need to hear it.<br>That is not skill. That is a gift.</div>
+    </div>
+  </div>
+
+  <!-- PHOTO SLIDE B -->
+  <div class="slide" id="ph2">
+    <div class="slide-bg"><div class="glow" style="width:380px;height:380px;background:radial-gradient(circle,rgba(251,191,36,0.12),transparent);top:50%;left:50%;transform:translate(-50%,-50%)"></div></div>
+    <div class="chapter-tag">A Moment</div>
+    <div class="photo-frame">
+      <div class="photo-box">
+        <div class="photo-icon">📸</div>
+        <img src="img/18.webp" alt="Itee Mercy" onerror="this.style.display='none'">
+      </div>
+      <div class="photo-caption">Beauty with brains ✨</div>
+    </div>
+  </div>
+
+  <!-- 5: Humour -->
+  <div class="slide" id="s4">
+    <div class="slide-bg">
+      <div class="glow" style="width:420px;height:420px;background:radial-gradient(circle,rgba(52,211,153,0.08),transparent);top:30%;right:0"></div>
+      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <path d="M300 250 Q400 320 500 250" fill="none" stroke="rgba(52,211,153,0.18)" stroke-width="2"/>
+        <circle cx="340" cy="230" r="10" fill="rgba(52,211,153,0.1)"/>
+        <circle cx="460" cy="230" r="10" fill="rgba(52,211,153,0.1)"/>
+        <circle cx="400" cy="340" r="78" fill="none" stroke="rgba(52,211,153,0.06)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="chapter-tag">05 - Your Humour</div>
+    <div class="card" style="--tl:linear-gradient(90deg,transparent,rgba(52,211,153,.22),transparent)">
+      <div class="hero-label">The way you make me laugh</div>
+      <div class="hero-word" style="--ng:linear-gradient(135deg,#34d399,#a7f3d0)">Effortless<br>&amp; Rare.</div>
+      <div class="divider" style="--dc:rgba(52,211,153,0.3)"></div>
+      <div class="sub-line">You don't try to be funny. <strong>You just are.</strong><br>And somehow, in the middle of something heavy,<br>you find the exact crack where the light gets in for me.</div>
+    </div>
+  </div>
+
+  <!-- 6: Shows up -->
+  <div class="slide" id="s5">
+    <div class="slide-bg">
+      <div class="glow" style="width:500px;height:360px;background:radial-gradient(circle,rgba(248,113,113,0.09),transparent);top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <path d="M400 200 C400 200 280 260 280 340 C280 390 340 420 400 390 C460 420 520 390 520 340 C520 260 400 200 400 200Z" fill="rgba(248,113,113,0.05)" stroke="rgba(248,113,113,0.12)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="chapter-tag">06 - You Show Up</div>
+    <div class="card" style="--tl:linear-gradient(90deg,transparent,rgba(248,113,113,.22),transparent)">
+      <div class="hero-label">Even with your own battles</div>
+      <div class="hero-word" style="--ng:linear-gradient(135deg,#f87171,#fecaca)">You still<br>show up.</div>
+      <div class="divider" style="--dc:rgba(248,113,113,0.3)"></div>
+      <div class="sub-line">You carry your own weight. Your own quiet struggles.<br>Your own unanswered questions.<br><strong>And still — you come through for me.<br>That is not small. That is everything.</strong></div>
+    </div>
+  </div>
+
+  <!-- PHOTO SLIDE C -->
+  <div class="slide" id="ph3">
+    <div class="slide-bg"><div class="glow" style="width:380px;height:380px;background:radial-gradient(circle,rgba(248,113,113,0.12),transparent);top:50%;left:50%;transform:translate(-50%,-50%)"></div></div>
+    <div class="chapter-tag">A Moment</div>
+    <div class="photo-frame">
+      <div class="photo-box">
+        <div class="photo-icon">📸</div>
+        <img src="img/19.jpg" alt="Itee Mercy" onerror="this.style.display='none'">
+      </div>
+      <div class="photo-caption">You show up, always 🌸</div>
+    </div>
+  </div>
+
+  <!-- 7: Journey -->
+  <div class="slide" id="s6">
+    <div class="slide-bg">
+      <div class="glow" style="width:420px;height:420px;background:radial-gradient(circle,rgba(129,140,248,0.09),transparent);top:-36px;left:50%;transform:translateX(-50%)"></div>
+      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <path d="M160 420 Q280 200 400 300 Q520 400 640 180" fill="none" stroke="rgba(129,140,248,0.14)" stroke-width="1.5"/>
+        <circle cx="640" cy="180" r="7" fill="rgba(129,140,248,0.35)"/>
+        <circle cx="160" cy="420" r="5" fill="rgba(129,140,248,0.18)"/>
+      </svg>
+    </div>
+    <div class="chapter-tag">07 - My Journey</div>
+    <div class="card" style="--tl:linear-gradient(90deg,transparent,rgba(129,140,248,.22),transparent)">
+      <div class="hero-label">I am not there yet — and that is okay</div>
+      <div class="hero-word" style="--ng:linear-gradient(135deg,#818cf8,#c7d2fe)">Still<br>becoming.</div>
+      <div class="divider" style="--dc:rgba(129,140,248,0.3)"></div>
+      <div class="sub-line">My destination hasn't arrived. The season is still unfolding.<br><strong>But you believed in the version of me<br>that isn't fully here yet.</strong> That kind of faith is rare.</div>
+    </div>
+  </div>
+
+  <!-- 8: Loyalty -->
+  <div class="slide" id="s7">
+    <div class="slide-bg">
+      <div class="glow" style="width:500px;height:360px;background:radial-gradient(circle,rgba(251,146,60,0.09),transparent);bottom:-28px;right:-28px"></div>
+      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="400" cy="300" r="165" fill="none" stroke="rgba(251,146,60,0.08)" stroke-width="1"/>
+        <circle cx="400" cy="300" r="96" fill="none" stroke="rgba(251,146,60,0.05)" stroke-width="0.5"/>
+        <circle cx="400" cy="300" r="36" fill="rgba(251,146,60,0.04)"/>
+      </svg>
+    </div>
+    <div class="chapter-tag">08 - Your Loyalty</div>
+    <div class="card" style="--tl:linear-gradient(90deg,transparent,rgba(251,146,60,.22),transparent)">
+      <div class="hero-label">You chose me</div>
+      <div class="hero-num" style="--ng:linear-gradient(135deg,#fb923c,#fed7aa)">Every<br><span style="font-size:0.48em;letter-spacing:-1px">single time.</span></div>
+      <div class="divider" style="--dc:rgba(251,146,60,0.3)"></div>
+      <div class="sub-line">Not when it was easy. Not when it was convenient.<br><strong>Even across time zones and silence and seasons —<br>you chose to stay in my corner.</strong></div>
+    </div>
+  </div>
+
+  <!-- PHOTO SLIDE D -->
+  <div class="slide" id="ph4">
+    <div class="slide-bg"><div class="glow" style="width:380px;height:380px;background:radial-gradient(circle,rgba(251,146,60,0.12),transparent);top:50%;left:50%;transform:translate(-50%,-50%)"></div></div>
+    <div class="chapter-tag">A Moment</div>
+    <div class="photo-frame">
+      <div class="photo-box">
+        <div class="photo-icon">📸</div>
+        <img src="img/20.jpeg" alt="Itee Mercy" class="c-cell-img" onerror="this.style.display='none'">
+      </div>
+      <div class="photo-caption">Loyal beyond words 🔥</div>
+    </div>
+  </div>
+
+  <!-- 9: Presence -->
+  <div class="slide" id="s8">
+    <div class="slide-bg">
+      <div class="glow" style="width:420px;height:420px;background:radial-gradient(circle,rgba(232,121,249,0.09),transparent);top:0;left:0"></div>
+      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <rect x="200" y="160" width="400" height="280" rx="8" fill="none" stroke="rgba(232,121,249,0.07)" stroke-width="1"/>
+        <rect x="240" y="200" width="320" height="200" rx="6" fill="rgba(232,121,249,0.03)"/>
+        <line x1="200" y1="260" x2="600" y2="260" stroke="rgba(232,121,249,0.06)" stroke-width="0.5"/>
+        <line x1="200" y1="320" x2="600" y2="320" stroke="rgba(232,121,249,0.04)" stroke-width="0.5"/>
+      </svg>
+    </div>
+    <div class="chapter-tag">09 - Your Presence</div>
+    <div class="card" style="--tl:linear-gradient(90deg,transparent,rgba(232,121,249,.22),transparent)">
+      <div class="hero-label">The most consistent thing in my life</div>
+      <div class="hero-word" style="--ng:linear-gradient(135deg,#e879f9,#f5d0fe)">Your quiet<br>presence.</div>
+      <div class="divider" style="--dc:rgba(232,121,249,0.3)"></div>
+      <div class="sub-line">Not grand gestures. Not performances.<br>Just you — <strong>steady, real, unhurried.</strong><br>Showing up in the small moments that built something large in me.</div>
+    </div>
+  </div>
+
+  <!-- 10: What she built -->
+  <div class="slide" id="s9">
+    <div class="slide-bg">
+      <div class="glow" style="width:500px;height:440px;background:radial-gradient(circle,rgba(34,197,94,0.07),transparent);bottom:0;left:50%;transform:translateX(-50%)"></div>
+      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <path d="M200 480 L280 360 L360 400 L440 280 L520 320 L600 160" fill="none" stroke="rgba(34,197,94,0.13)" stroke-width="1.5"/>
+        <circle cx="600" cy="160" r="7" fill="rgba(34,197,94,0.35)"/>
+        <circle cx="200" cy="480" r="5" fill="rgba(34,197,94,0.18)"/>
+      </svg>
+    </div>
+    <div class="chapter-tag">10 - What You Built</div>
+    <div class="card" style="--tl:linear-gradient(90deg,transparent,rgba(34,197,94,.22),transparent)">
+      <div class="hero-label">Your words did something to me</div>
+      <div class="hero-stat" style="--ng:linear-gradient(135deg,#22c55e,#bbf7d0)">You built<br>something<br>in me.</div>
+      <div class="divider" style="--dc:rgba(34,197,94,0.3)"></div>
+      <div class="sub-line"><strong>I am partly who I am today because of you.</strong><br>Your words settled somewhere inside me and became<br>a foundation I didn't even realise I was standing on.</div>
+    </div>
+  </div>
+
+  <!-- PHOTO SLIDE E -->
+  <div class="slide" id="ph5">
+    <div class="slide-bg"><div class="glow" style="width:380px;height:380px;background:radial-gradient(circle,rgba(34,197,94,0.12),transparent);top:50%;left:50%;transform:translate(-50%,-50%)"></div></div>
+    <div class="chapter-tag">A Moment</div>
+    <div class="photo-frame">
+      <div class="photo-box">
+        <div class="photo-icon">📸</div>
+        <img src="img/6.jpg" alt="Itee Mercy" onerror="this.style.display='none'">
+      </div>
+      <div class="photo-caption">Building something beautiful 🌿</div>
+    </div>
+  </div>
+
+  <!-- 11: Rarity -->
+  <div class="slide" id="s10">
+    <div class="slide-bg">
+      <div class="glow" style="width:500px;height:500px;background:radial-gradient(circle,rgba(251,175,80,0.08),transparent);top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="400,100 550,400 250,400" fill="none" stroke="rgba(251,175,80,0.09)" stroke-width="1"/>
+        <polygon points="400,150 520,380 280,380" fill="none" stroke="rgba(251,175,80,0.05)" stroke-width="0.5"/>
+        <circle cx="400" cy="320" r="12" fill="rgba(251,175,80,0.1)"/>
+        <circle cx="400" cy="320" r="28" fill="none" stroke="rgba(251,175,80,0.06)" stroke-width="0.5"/>
+      </svg>
+    </div>
+    <div class="chapter-tag">11 - Your Rarity</div>
+    <div class="card" style="--tl:linear-gradient(90deg,transparent,rgba(251,175,80,.28),transparent)">
+      <div class="hero-label">People like you</div>
+      <div class="hero-word" style="--ng:linear-gradient(135deg,#fbbf6e,#fde68a,#f8a4c8)">Don't exist<br>in numbers.</div>
+      <div class="divider" style="--dc:rgba(251,175,80,0.35)"></div>
+      <div class="sub-line">Prayerful. Wise. Funny. Loyal. Real. Present.<br><strong>All of it, at once, without trying.</strong><br>I know how rare that is. I hold it gently.</div>
+    </div>
+  </div>
+
+  <!-- 12: Thank you -->
+  <div class="slide" id="s11">
+    <div class="slide-bg">
+      <div class="glow" style="width:580px;height:440px;background:radial-gradient(ellipse,rgba(200,120,240,0.1),transparent);top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="400" cy="300" r="220" fill="none" stroke="rgba(200,120,240,0.05)" stroke-width="1"/>
+        <circle cx="400" cy="300" r="155" fill="none" stroke="rgba(200,120,240,0.04)" stroke-width="0.5"/>
+        <circle cx="400" cy="300" r="82" fill="rgba(200,120,240,0.03)"/>
+      </svg>
+    </div>
+    <div class="chapter-tag">12 - Praise Thanks Mercy</div>
+    <div class="card" style="--tl:linear-gradient(90deg,transparent,rgba(200,120,240,.28),transparent)">
+      <div class="hero-label">Praise thanks Mercy</div>
+      <div class="hero-word" style="--ng:linear-gradient(135deg,#c084fc,#e9d5ff,#f8a4c8)">Thank you,<br>Mercy.</div>
+      <div class="divider" style="--dc:rgba(200,120,240,0.35)"></div>
+      <div class="sub-line">Not for a day. Not for a season.<br><strong>For being exactly who you are —<br>even when being that person costs you something.</strong><br>I see it. I don't take it for granted.</div>
+    </div>
+  </div>
+
+</div>
+<!-- /STAGE -->
+
+<div id="arrows">
+  <button class="arr-btn" onclick="prevSlide()">&#8592;</button>
+  <div class="slide-counter" id="counter">1 / 17</div>
+  <button class="arr-btn" onclick="nextSlide()">&#8594;</button>
+</div>
+
+<!-- ===== SCROLL PAGE ===== -->
+<div id="scroll-page">
+
+  <div class="sp-hero">
+    <div class="sp-eyebrow">The full picture</div>
+    <h1 class="sp-name">Itee<br>Mercy.</h1>
+    <div class="sp-line"></div>
+    <p class="sp-tagline">Prayerful, wise, fun, loyal, and irreplaceable. You have been a blessing in my life.</p>
+    <div class="sp-from">From Praise-Emmanuel</div>
+  </div>
+
+  <div class="letter-wrap">
+    <div class="letter-from">Letter to Mercy</div>
+    <div class="letter">
+      <p><strong><i>Dear Mercy,</i></strong> <br>I have been thinking about how to say this for longer than you know. Not because the words are too hard to find, but because what you mean to me cannot be reduced to something small.</p>
+      <p>On the 2nd of September 2024, when I resumed as an intern in a startup company in the ancient city of Benin, from the very first days you were one colleague who showed genuine care and concern. Before I knew it, you had moved from the office into my heart.</p>
+      <p>I quietly observed the sacrifices you made, going out of your way in getting things done. Your aura carries such peace. You cannot stand disorderliness, and you will burn yourself out without hesitation if needed. You are a burning and shining light indeed, mon ami.</p>
+      <p>This is not an anniversary, not a birthday, and not New Year, not an obvious special day, but must there be a special reason for me to express my gratitude? Your selflessness is rare, and it deserves to be appreciated every single day!</p>
+      <p>Your words and your presence have done something deep inside me over time. They have built a quiet confidence in me, a stronger resilience, and a comforting sense that I am not entirely alone in this journey. Across the kilometres and the different time zones, even while carrying your own weight and fighting your own battles, you still show up. You call. You check in. You speak with that perfect mix of honesty and warmth that only you have. You're effortlessly humourous, even in heavy moments, that is a gift I don’t think you fully realise.</p>
+      <p>I see all of it: your wisdom, your wit, your loyalty that never needs to announce itself, and the way you keep showing up even when it costs you something. None of it has gone unnoticed. None of it has been taken for granted.</p>
+      <p>I want you to know that you are rare. The world is better because you are in it. And I am specifically, concretely, measurably better because you are in my life.</p>
+      <p><strong><i>God bless you, keep you, uphold you, and strengthen you.</i></strong> Keep pushing, my guy! We will see each other at the top!</p>
+      <div class="letter-sig">With every ounce of sincerity,<br>Praise-Emmanuel.</div>
+    </div>
+  </div>
+
+  <!-- ===== COLLAGE ===== -->
+  <div id="collage-section">
+    <div class="collage-eyebrow">Itee in pictures</div>
+    <h2 class="collage-headline">Photos of <em>Itee</em></h2>
+
+    <div class="c-grid" id="cGrid">
+      <div class="c-cell" style="--ci:1;--cr:-2deg">
+        <img src="img/1.jpg" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="c-cell" style="--ci:2;--cr:2deg">
+        <img src="img/2.jpg" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="c-cell" style="--ci:3;--cr:-1deg">
+        <img src="img/3.jpg" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="c-cell" style="--ci:4;--cr:2deg">
+        <img src="img/5.jpg" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="c-cell" style="--ci:5;--cr:-1deg">
+        <img src="img/18.webp" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="c-cell" style="--ci:6;--cr:2deg">
+        <img src="img/10.jpg" alt="" class="c-cell-img" onerror="this.style.display='none'">
+      </div>
+      <div class="c-cell" style="--ci:7;--cr:-1deg">
+        <img src="img/4.jpg" alt="" onerror="this.style.display='none'">
+      </div>
+    </div>
+  </div>
+
+  <div class="final">
+    <div class="final-star">✦</div>
+    <h2 class="final-title" id="finalTitle">Thanks for being<br><em>Itee!</em></h2>
+    <p class="final-note" id="finalNote">
+      It has been 20 months since that 2nd of September, and the journey continues. 
+      As the Bible says, <strong><i>"the path of the just is like a shining light that shines ever brighter"</i></strong>. 
+      We shall have better days, better years, beautiful moments, and bigger testimonies!
+    </p>
+    <p class="final-note" id="finalNote2" style="margin-top: 10px;">
+      God, our Script Writer and Master Strategist, will see us through every hurdle, 
+      every turmoil, and every trial.<br>In Jesus’ Name.
+    </p>
+    <div class="final-badge">Designed for Mercy by Peemanuel</div>
+  </div>
+
+  <div class="sp-footer"><p>Praise-Emmanuel appreciates you!</p></div>
+</div>
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous image">&#10094;</button>
+  
+  <div class="lightbox-content">
+    <img id="lightboxImg" src="" alt="Expanded photo">
+  </div>
+  
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image">&#10095;</button>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
