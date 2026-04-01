@@ -294,6 +294,47 @@ const revIO = new IntersectionObserver(entries=>{
   });
 },{threshold:0.1});
 
+function animateCounter() {
+    const counterEl = document.getElementById('distance-counter');
+    if (!counterEl) return;
+
+    const target = 6800;
+    const duration = 3500;
+    const startTime = performance.now();
+
+    function updateCount(now) {
+        const elapsed = now - startTime;
+        let progress = Math.min(elapsed / duration, 1);
+        
+        progress = 1 - Math.pow(1 - progress, 3);
+
+        const current = Math.floor(progress * target);
+        counterEl.textContent = current.toLocaleString() + '+';
+
+        if (progress < 1) {
+            requestAnimationFrame(updateCount);
+        } else {
+            counterEl.textContent = '6,800+';
+        }
+    }
+
+    requestAnimationFrame(updateCount);
+}
+
+const distanceSlide = document.getElementById('s1');
+if (distanceSlide) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setTimeout(animateCounter, 400);
+                observer.disconnect();
+            }
+        });
+    }, { threshold: 0.6 });
+
+    observer.observe(distanceSlide);
+}
+
 const letter = document.querySelector('.letter');
 const ft = document.getElementById('finalTitle');
 const fn = document.getElementById('finalNote');
@@ -303,3 +344,54 @@ if(letter) revIO.observe(letter);
 if(ft) revIO.observe(ft);
 if(fn) revIO.observe(fn);
 if(fn2) revIO.observe(fn2);
+
+// ─── MOBILE HOLD TO PAUSE (CENTER ONLY) ─────────────────────────────────────────────
+
+let isHolding = false;
+
+const stage = document.getElementById('stage');
+
+stage.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1) return;
+
+    const touchX = e.touches[0].clientX;
+    const screenCenter = window.innerWidth / 2;
+    const centerZone = window.innerWidth * 0.35;
+
+    if (Math.abs(touchX - screenCenter) < centerZone) {
+        isHolding = true;
+
+        const currentSlide = slides[cur];
+        if (currentSlide) {
+            currentSlide.style.transition = 'transform 0.25s ease';
+            currentSlide.style.transform = 'scale(0.97)';
+        }
+
+        if (raf) {
+            cancelAnimationFrame(raf);
+            raf = null;
+        }
+    }
+}, { passive: true });
+
+stage.addEventListener('touchend', () => {
+    if (!isHolding) return;
+
+    isHolding = false;
+
+    const currentSlide = slides[cur];
+    if (currentSlide) {
+        currentSlide.style.transform = 'scale(1)';
+    }
+
+    resetTimer();
+}, { passive: true });
+
+stage.addEventListener('touchcancel', () => {
+    if (isHolding) {
+        isHolding = false;
+        const currentSlide = slides[cur];
+        if (currentSlide) currentSlide.style.transform = 'scale(1)';
+        resetTimer();
+    }
+}, { passive: true });
