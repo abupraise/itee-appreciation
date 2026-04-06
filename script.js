@@ -108,7 +108,7 @@ function showPrevImage() {
 // ── SLIDES ─────────────────────────────────────────────────────
 const slides = Array.from(document.querySelectorAll('#stage .slide'));
 const TOTAL = slides.length;
-let cur = 0, elapsed = 0, DURATION = 6500, raf = null;
+let cur = 0, elapsed = 0, DURATION = 6500, raf = null, isPaused = false;
 const progWrap = document.getElementById('progress-wrap');
 const counter = document.getElementById('counter');
 
@@ -160,15 +160,22 @@ function prevSlide(){
 
 function resetTimer(){
   elapsed = 0;
+  isPaused = false;
   if(raf) cancelAnimationFrame(raf);
   const seg = segs()[cur];
   seg.classList.add('active');
   let last = performance.now();
 
   function tick(now){
-    const dt = now-last;
-    last=now;
-    elapsed+=dt;
+    if(isPaused){
+      // Frozen — keep looping but reset last so no elapsed jump when resumed
+      last = now;
+      raf = requestAnimationFrame(tick);
+      return;
+    }
+    const dt = now - last;
+    last = now;
+    elapsed += dt;
     seg.querySelector('.prog-fill').style.width = Math.min(elapsed/DURATION*100,100)+'%';
     if(elapsed >= DURATION){
       nextSlide();
@@ -397,30 +404,25 @@ function isInCentreZone(clientX) {
 function startHold(clientX) {
   if (!isInCentreZone(clientX)) return;
   isHolding = true;
+  isPaused  = true; // tick loop sees this and freezes elapsed
 
   const currentSlide = slides[cur];
   if (currentSlide) {
     currentSlide.style.transition = 'transform 0.25s ease';
     currentSlide.style.transform  = 'scale(0.97)';
   }
-
-  if (raf) {
-    cancelAnimationFrame(raf);
-    raf = null;
-  }
 }
 
 function endHold() {
   if (!isHolding) return;
   isHolding = false;
+  isPaused  = false; // tick loop resumes counting
 
   const currentSlide = slides[cur];
   if (currentSlide) {
     currentSlide.style.transition = 'transform 0.25s ease';
     currentSlide.style.transform  = 'scale(1)';
   }
-
-  resetTimer();
 }
 
 // ── Touch ──
