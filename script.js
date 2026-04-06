@@ -30,10 +30,11 @@ for(let i=0;i<110;i++) pts.push(new Pt());
   requestAnimationFrame(loop);
 })();
 
-// ── COLLAGE LIGHTBOX: DECLARE FIRST ────────────────────────────
+// ── COLLAGE LIGHTBOX ────────────────────────────────────────────
 let collageImages = [];
 let currentImageIndex = 0;
 let lbTouchStartX = 0;
+let lbTransitioning = false; // prevent rapid-fire clicks during transition
 
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightboxImg');
@@ -44,7 +45,8 @@ const lightboxNext = document.getElementById('lightboxNext');
 function openLightbox(index) {
   if (!collageImages.length) return;
   currentImageIndex = index;
-  updateLightboxImage();
+  lightboxImg.src = collageImages[currentImageIndex].src;
+  lightboxImg.alt = collageImages[currentImageIndex].alt || `Photo ${currentImageIndex + 1}`;
   lightbox.classList.add('show');
   document.body.classList.add('lightbox-open');
 }
@@ -54,23 +56,53 @@ function closeLightbox() {
   document.body.classList.remove('lightbox-open');
 }
 
-function updateLightboxImage() {
-  const img = collageImages[currentImageIndex];
-  if (!img) return;
-  lightboxImg.src = img.src;
-  lightboxImg.alt = img.alt || `Photo ${currentImageIndex + 1}`;
+// ── SMOOTH IMAGE TRANSITION ────────────────────────────────────
+// Direction: 'next' slides new image from right, 'prev' from left
+function transitionLightboxImage(direction) {
+  if (lbTransitioning) return;
+  lbTransitioning = true;
+
+  const enterFrom  = direction === 'next' ? '60px' : '-60px';
+  const exitTo     = direction === 'next' ? '-60px' : '60px';
+
+  // Fade + slide out current image
+  lightboxImg.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+  lightboxImg.style.opacity    = '0';
+  lightboxImg.style.transform  = `translateX(${exitTo})`;
+
+  setTimeout(() => {
+    // Update index
+    if (direction === 'next') {
+      currentImageIndex = (currentImageIndex + 1) % collageImages.length;
+    } else {
+      currentImageIndex = (currentImageIndex - 1 + collageImages.length) % collageImages.length;
+    }
+
+    // Position new image off-screen, then fade in
+    lightboxImg.style.transition = 'none';
+    lightboxImg.style.transform  = `translateX(${enterFrom})`;
+    lightboxImg.src = collageImages[currentImageIndex].src;
+    lightboxImg.alt = collageImages[currentImageIndex].alt || `Photo ${currentImageIndex + 1}`;
+
+    // Force reflow so the 'none' transition takes effect before re-enabling
+    void lightboxImg.offsetWidth;
+
+    lightboxImg.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+    lightboxImg.style.opacity    = '1';
+    lightboxImg.style.transform  = 'translateX(0)';
+
+    setTimeout(() => { lbTransitioning = false; }, 260);
+  }, 230);
 }
 
 function showNextImage() {
   if (!collageImages.length) return;
-  currentImageIndex = (currentImageIndex + 1) % collageImages.length;
-  updateLightboxImage();
+  transitionLightboxImage('next');
 }
 
 function showPrevImage() {
   if (!collageImages.length) return;
-  currentImageIndex = (currentImageIndex - 1 + collageImages.length) % collageImages.length;
-  updateLightboxImage();
+  transitionLightboxImage('prev');
 }
 
 // ── SLIDES ─────────────────────────────────────────────────────
@@ -80,7 +112,6 @@ let cur = 0, elapsed = 0, DURATION = 6500, raf = null;
 const progWrap = document.getElementById('progress-wrap');
 const counter = document.getElementById('counter');
 
-// build progress bar segments
 for(let i = 0; i < TOTAL; i++){
   const seg = document.createElement('div');
   seg.className = 'prog-seg';
@@ -294,45 +325,49 @@ const revIO = new IntersectionObserver(entries=>{
   });
 },{threshold:0.1});
 
+// ── DISTANCE COUNTER — only fires when slide #2 (s1) is active ──
+// Uses a MutationObserver watching for the 'active' class on the slide
+// so the count starts exactly when the user lands on that slide,
+// whether they arrive via auto-advance or manual navigation.
+let counterHasFired = false;
+
 function animateCounter() {
-    const counterEl = document.getElementById('distance-counter');
-    if (!counterEl) return;
+  const counterEl = document.getElementById('distance-counter');
+  if (!counterEl) return;
 
-    const target = 6800;
-    const duration = 3500;
-    const startTime = performance.now();
+  const target   = 6800;
+  const duration = 3500;
+  const startTime = performance.now();
 
-    function updateCount(now) {
-        const elapsed = now - startTime;
-        let progress = Math.min(elapsed / duration, 1);
-        
-        progress = 1 - Math.pow(1 - progress, 3);
+  function updateCount(now) {
+    const elapsed  = now - startTime;
+    let progress   = Math.min(elapsed / duration, 1);
+    progress       = 1 - Math.pow(1 - progress, 3); // ease-out cubic
 
-        const current = Math.floor(progress * target);
-        counterEl.textContent = current.toLocaleString() + '+';
+    const current  = Math.floor(progress * target);
+    counterEl.textContent = current.toLocaleString() + '+';
 
-        if (progress < 1) {
-            requestAnimationFrame(updateCount);
-        } else {
-            counterEl.textContent = '6,800+';
-        }
+    if (progress < 1) {
+      requestAnimationFrame(updateCount);
+    } else {
+      counterEl.textContent = '6,800+';
     }
+  }
 
-    requestAnimationFrame(updateCount);
+  requestAnimationFrame(updateCount);
 }
 
 const distanceSlide = document.getElementById('s1');
 if (distanceSlide) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                setTimeout(animateCounter, 400);
-                observer.disconnect();
-            }
-        });
-    }, { threshold: 0.6 });
-
-    observer.observe(distanceSlide);
+  // Watch for the 'active' class being added to the slide
+  const classObserver = new MutationObserver(() => {
+    if (distanceSlide.classList.contains('active') && !counterHasFired) {
+      counterHasFired = true;
+      setTimeout(animateCounter, 400);
+      classObserver.disconnect(); // run only once
+    }
+  });
+  classObserver.observe(distanceSlide, { attributes: true, attributeFilter: ['class'] });
 }
 
 const letter = document.querySelector('.letter');
@@ -345,53 +380,66 @@ if(ft) revIO.observe(ft);
 if(fn) revIO.observe(fn);
 if(fn2) revIO.observe(fn2);
 
-// ─── MOBILE HOLD TO PAUSE (CENTER ONLY) ─────────────────────────────────────────────
+// ── HOLD TO PAUSE (mobile + desktop, centre zone) ────────────────
+// Works on both touch and mouse. Holding the centre 35% of the screen
+// freezes the progress timer and slightly scales the slide down.
 
 let isHolding = false;
 
 const stage = document.getElementById('stage');
 
+function isInCentreZone(clientX) {
+  const centre     = window.innerWidth / 2;
+  const halfZone   = window.innerWidth * 0.175; // 35% total
+  return Math.abs(clientX - centre) < halfZone;
+}
+
+function startHold(clientX) {
+  if (!isInCentreZone(clientX)) return;
+  isHolding = true;
+
+  const currentSlide = slides[cur];
+  if (currentSlide) {
+    currentSlide.style.transition = 'transform 0.25s ease';
+    currentSlide.style.transform  = 'scale(0.97)';
+  }
+
+  if (raf) {
+    cancelAnimationFrame(raf);
+    raf = null;
+  }
+}
+
+function endHold() {
+  if (!isHolding) return;
+  isHolding = false;
+
+  const currentSlide = slides[cur];
+  if (currentSlide) {
+    currentSlide.style.transition = 'transform 0.25s ease';
+    currentSlide.style.transform  = 'scale(1)';
+  }
+
+  resetTimer();
+}
+
+// ── Touch ──
 stage.addEventListener('touchstart', (e) => {
-    if (e.touches.length !== 1) return;
-
-    const touchX = e.touches[0].clientX;
-    const screenCenter = window.innerWidth / 2;
-    const centerZone = window.innerWidth * 0.35;
-
-    if (Math.abs(touchX - screenCenter) < centerZone) {
-        isHolding = true;
-
-        const currentSlide = slides[cur];
-        if (currentSlide) {
-            currentSlide.style.transition = 'transform 0.25s ease';
-            currentSlide.style.transform = 'scale(0.97)';
-        }
-
-        if (raf) {
-            cancelAnimationFrame(raf);
-            raf = null;
-        }
-    }
+  if (e.touches.length !== 1) return;
+  startHold(e.touches[0].clientX);
 }, { passive: true });
 
-stage.addEventListener('touchend', () => {
-    if (!isHolding) return;
+stage.addEventListener('touchend',    endHold, { passive: true });
+stage.addEventListener('touchcancel', endHold, { passive: true });
 
-    isHolding = false;
+// ── Mouse (desktop) ──
+stage.addEventListener('mousedown', (e) => {
+  // Only primary button (left click)
+  if (e.button !== 0) return;
+  startHold(e.clientX);
+});
 
-    const currentSlide = slides[cur];
-    if (currentSlide) {
-        currentSlide.style.transform = 'scale(1)';
-    }
-
-    resetTimer();
-}, { passive: true });
-
-stage.addEventListener('touchcancel', () => {
-    if (isHolding) {
-        isHolding = false;
-        const currentSlide = slides[cur];
-        if (currentSlide) currentSlide.style.transform = 'scale(1)';
-        resetTimer();
-    }
-}, { passive: true });
+// Release on mouseup anywhere (in case cursor drifts outside stage)
+document.addEventListener('mouseup', () => {
+  if (isHolding) endHold();
+});

@@ -527,3 +527,9 @@ body.lightbox-open {
 #scroll-page .final-note strong i {
     color: rgba(251, 175, 80, 0.85);
 }
+
+#lightboxImg {
+  will-change: opacity, transform;
+  opacity: 1;
+  transform: translateX(0);
+}
